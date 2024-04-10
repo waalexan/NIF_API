@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta NIF</title>
+</head>
+<body>
+    <h1>Consulta NIF</h1>
+    <form id="nifForm">
+        <label for="nifInput">Digite o NIF:</label>
+        <input type="text" id="nifInput" name="nif">
+        <button type="submit">Consultar</button>
+    </form>
+    <div id="resultado"></div>
+
+    <script>
+        document.getElementById('nifForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var nif = document.getElementById('nifInput').value;
+            fetch('/consulta-nif', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ nif: nif }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                var resultadoDiv = document.getElementById('resultado');
+                resultadoDiv.innerHTML = '';
+
+                if (data.error) {
+                    resultadoDiv.textContent = data.error;
+                } else {
+                    for (var key in data) {
+                        resultadoDiv.innerHTML += `<p><strong>${key}:</strong> ${data[key]}</p>`;
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+            });
+        });
+    </script>
+</body>
+</html>
