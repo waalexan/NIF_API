@@ -9,7 +9,7 @@ app = Flask(__name__)
 def index():
     return render_template('try_api.html')
 
-@app.route('/consulta-nif', methods=['POST'])
+@app.route('/consulta', methods=['POST'])
 def consulta_nif():
     data = request.get_json()
     nif = data.get('nif')

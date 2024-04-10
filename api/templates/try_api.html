@@ -19,7 +19,7 @@
             event.preventDefault();
 
             var nif = document.getElementById('nifInput').value;
-            fetch('/consulta-nif', {
+            fetch('/consulta', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -35,7 +35,7 @@
                     resultadoDiv.textContent = data.error;
                 } else {
                     for (var key in data) {
-                        resultadoDiv.innerHTML += `<p><strong>${key}:</strong> ${data[key]}</p>`;
+                        resultadoDiv.innerHTML += `<p><strong>${key}</strong> ${data[key]}</p>`;
                     }
                 }
             })

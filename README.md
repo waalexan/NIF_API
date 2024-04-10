@@ -2,55 +2,65 @@
 
 ## Introdução
 
-O MySQL Operator para Kubernetes é um operador para gerenciar setups do MySQL InnoDB Cluster dentro de um Kubernetes Cluster. Ele gerencia o ciclo completo com configuração e manutenção, incluindo atualizações e backup automatizados.
+No mundo digitalizado e interconectado de hoje, a eficiência e a acessibilidade da informação são essenciais. Uma área crucial onde isso se aplica é a validação de números de identificação fiscal (NIF), também conhecidos como CPF (Cadastro de Pessoas Físicas) no Brasil ou NIF em Portugal. Estes números desempenham um papel fundamental em uma variedade de transações financeiras e administrativas, desde a emissão de faturas até a realização de transações bancárias.
 
-O MySQL Operator para Kubernetes é trazido para você pela equipe MySQL da Oracle.
+Neste contexto, o desenvolvimento de uma API robusta e fácil de usar para a consulta de números de identificação fiscal torna-se uma necessidade crescente. A API que apresentamos neste artigo preenche essa lacuna, oferecendo uma solução eficiente e confiável para a validação de NIF em projetos desenvolvidos em Python.
 
-- **Repositório:** [NIF API](https://github.com/mr-body/NIF_API)
+- **Repositório:** [NIF API](https://github.com/syshard/NIF_API)
 - **Autor:** Walter Alexandre Santana (mr-body)
 
-### Usando Helm
 
-Alternativamente, você pode usar [Helm](https://helm.sh/docs/intro/quickstart/); que é um gerenciador de pacotes para Kubernetes.
+### ANGOLA CONECTADA
+  * https://meunif.vercel.app
+
+Este artigo apresentará em detalhes o processo de desenvolvimento e implementação desta API, discutindo sua arquitetura, funcionamento e casos de uso práticos. Além disso, exploraremos as vantagens e benefícios de incorporar esta API em diferentes aplicações, destacando sua flexibilidade, escalabilidade e precisão na verificação de números de identificação fiscal.
+
+Instale o repositório do API :
+
+```sh
+git clone https://github.com/syshard/NIF_API.git
+pip install requetiment.txt
+cd NIF_API/api
+python app.py
+
+```
+### COMO USAR A NOSSA API
+
+Alternativamente, você pode usar o site [meunif](https://meunif.vercel.app); para ver a documentação e fazer teste de consultas
 
 Instale o repositório do Helm:
 
-```sh
-$> https://github.com/mr-body/NIF_API.git
-$> pip install requetiment.txt
-$> cd NIF_API
-$> cd api
-$> python app.py
-
-```
-
 ```yaml
-<script>
+// Função para enviar uma solicitação POST para a rota '/consulta' da API
+async function consultarNIF() {
+    const nif = document.getElementById('nifInput').value; // Obtém o número de identificação fiscal (NIF) do usuário
 
-            var nif = // seu nif
-            fetch('/https://meunif.vercel.app/api/consulta', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ nif: nif }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                var resultadoDiv = document.getElementById('resultado');
-                resultadoDiv.innerHTML = '';
+    // Verifica se o NIF foi fornecido
+    if (!nif) {
+        alert('Por favor, forneça um número de identificação fiscal (NIF).');
+        return;
+    }
 
-                if (data.error) {
-                    resultadoDiv.textContent = data.error;
-                } else {
-                    for (var key in data) {
-                        resultadoDiv.innerHTML += `<p><strong>${key}:</strong> ${data[key]}</p>`;
-                    }
-                }
-            })
-            .catch(error => {
-                console.error('Erro:', error);
-            });
-            </script>
-            
+    try {
+        const response = await fetch('https://meunif.vercel.app/api/consulta', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ nif }) // Envia o NIF como JSON no corpo da solicitação
+        });
+
+        // Verifica se a resposta da API foi bem-sucedida
+        if (!response.ok) {
+            throw new Error('Erro ao consultar o NIF. Por favor, tente novamente mais tarde.');
+        }
+
+        const data = await response.json(); // Converte a resposta da API em JSON
+        console.log(data); // Exibe os resultados da consulta na console
+
+        // Aqui você pode manipular os resultados da consulta, como exibi-los em uma página HTML
+    } catch (error) {
+        console.error('Erro:', error.message);
+    }
+}            
 ```
