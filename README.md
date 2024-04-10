@@ -19,8 +19,8 @@ Instale o repositório do API :
 
 ```sh
 git clone https://github.com/syshard/NIF_API.git
-pip install requetiment.txt
 cd NIF_API/api
+pip install requetiment.txt
 python app.py
 
 ```
