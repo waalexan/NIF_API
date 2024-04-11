@@ -1,48 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consulta NIF</title>
+    <title>Consulta de NIF</title>
 </head>
 <body>
-    <h1>Consulta NIF</h1>
-    <form id="nifForm">
-        <label for="nifInput">Digite o NIF:</label>
-        <input type="text" id="nifInput" name="nif">
-        <button type="submit">Consultar</button>
-    </form>
-    <div id="resultado"></div>
+    <input type="text" id="nifInput" placeholder="Insira o NIF">
+    <button onclick="consultarNIF()">Consultar</button>
 
     <script>
-        document.getElementById('nifForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+        async function consultarNIF() {
+            const nif = document.getElementById('nifInput').value;
 
-            var nif = document.getElementById('nifInput').value;
-            fetch('/consulta', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ nif: nif }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                var resultadoDiv = document.getElementById('resultado');
-                resultadoDiv.innerHTML = '';
+            if (!nif) {
+                alert('Por favor, forneça um número de identificação fiscal (NIF).');
+                return;
+            }
 
-                if (data.error) {
-                    resultadoDiv.textContent = data.error;
-                } else {
-                    for (var key in data) {
-                        resultadoDiv.innerHTML += `<p><strong>${key}</strong> ${data[key]}</p>`;
-                    }
+            try {
+                const response = await fetch('https://meunif.vercel.app/api/consulta', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ nif })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erro ao consultar o NIF. Por favor, tente novamente mais tarde.');
                 }
-            })
-            .catch(error => {
-                console.error('Erro:', error);
-            });
-        });
+
+                const data = await response.json();
+                console.log(data);
+
+                // Aqui você pode manipular os resultados da consulta, como exibi-los em uma página HTML
+            } catch (error) {
+                console.error('Erro:', error.message);
+            }
+        }
     </script>
 </body>
 </html>

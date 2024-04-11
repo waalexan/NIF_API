@@ -64,7 +64,7 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/templates/try_api.html');
 });
 
-app.post('/consulta', async (req, res) => {
+app.post('/api/consulta', async (req, res) => {
     const { nif } = req.body;
 
     if (!nif) {
