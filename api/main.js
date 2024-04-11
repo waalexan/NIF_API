@@ -6,6 +6,8 @@ const cheerio = require('cheerio');
 const app = express();
 const port = 3000;
 
+app.use(express.static('public')); // Diretório onde estão os arquivos estáticos
+
 // app.use((req, res, next) => {
 //     //console.log("Acessou o Middleware!");
 //     res.header("Access-Control-Allow-Origin", "*");
@@ -13,6 +15,7 @@ const port = 3000;
 //     app.use(cors());
 //     next();
 // });
+
 
 async function api(nif) {
     // URL para fazer scraping

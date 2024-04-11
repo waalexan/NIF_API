@@ -1,0 +1,57 @@
+* {
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+}
+body #loading {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  left: calc(50% - 50px);
+  top: calc(50% - 50px);
+}
+
+.tela {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 50%;
+  background-color: rgba(239, 239, 239, 0.7019607843);
+  border-bottom: 1px solid #ddd;
+}
+.tela #nifForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.tela #nifForm input[type=text] {
+  font-size: 14pt;
+  padding: 7px;
+  width: 700px;
+}
+.tela #nifForm button {
+  margin-top: 7px;
+  border: none;
+  padding: 10px;
+  background-color: rgb(40, 40, 40);
+  color: white;
+}
+
+#resultado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+/*# sourceMappingURL=style.css.map */

@@ -1,22 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consulta NIF</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/asset/css/style.css">
 </head>
+
 <body>
-    <h1>Consulta NIF</h1>
-    <form id="nifForm">
+    <div class="tela">
+        <h1 style="text-transform: uppercase;">
+            <b>Consulta NIF</b>
+        </h1>
         <label for="nifInput">Digite o NIF:</label>
-        <input type="text" id="nifInput" name="nif">
-        <button type="submit">Consultar</button>
-    </form>
+        <form id="nifForm">
+            <input type="text" id="nifInput" name="nif" placeholder="Número do BI" autocomplete="off">
+            <button type="submit">Consultar</button>
+        </form>
+    </div>
+    <div id="loading" style="display: none;">Carregando...</div>
     <div id="resultado"></div>
+    <img id="qrcode" alt="QR Code" style="display: none;">
 
     <script>
-        document.getElementById('nifForm').addEventListener('submit', function(event) {
+        document.getElementById('nifForm').addEventListener('submit', function (event) {
             event.preventDefault();
+
+            // Mostra o elemento de carregamento
+            document.getElementById('loading').style.display = 'block';
 
             var nif = document.getElementById('nifInput').value;
             fetch('/api/consulta', {
@@ -26,23 +41,34 @@
                 },
                 body: JSON.stringify({ nif: nif }),
             })
-            .then(response => response.json())
-            .then(data => {
-                var resultadoDiv = document.getElementById('resultado');
-                resultadoDiv.innerHTML = '';
+                .then(response => response.json())
+                .then(data => {
+                    var resultadoDiv = document.getElementById('resultado');
+                    resultadoDiv.innerHTML = '';
 
-                if (data.error) {
-                    resultadoDiv.textContent = data.error;
-                } else {
-                    for (var key in data) {
-                        resultadoDiv.innerHTML += `<p><strong>${key}</strong> ${data[key]}</p>`;
+                    // Verifica se data está vazia
+                    if (Object.keys(data).length === 0) {
+                        resultadoDiv.innerHTML = `<p><strong>ERROR</strong></p>`;
+                    } else {
+                        if (data.error) {
+                            resultadoDiv.textContent = data.error;
+                        } else {
+                            for (var key in data) {
+                                resultadoDiv.innerHTML += `<p><strong>${key}</strong> ${data[key]}</p>`;
+                            }
+                        }
                     }
-                }
-            })
-            .catch(error => {
-                console.error('Erro:', error);
-            });
+
+                    document.getElementById('loading').style.display = 'none';
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    // Em caso de erro, também oculta o elemento de carregamento
+                    document.getElementById('loading').style.display = 'none';
+                });
         });
+
     </script>
 </body>
+
 </html>
