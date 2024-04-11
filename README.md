@@ -7,7 +7,7 @@ No mundo digitalizado e interconectado de hoje, a eficiência e a acessibilidade
 Neste contexto, o desenvolvimento de uma API robusta e fácil de usar para a consulta de números de identificação fiscal torna-se uma necessidade crescente. A API que apresentamos neste artigo preenche essa lacuna, oferecendo uma solução eficiente e confiável para a validação de NIF em projetos desenvolvidos em Python e Javascript.
 
 - **Repositório:** [NIF API](https://github.com/syshard/NIF_API)
-- **Autor:** Walter Alexandre Santana (mr-body)
+- **Autor:** Walter Alexandre Santana [(mr-body)](https://mrbody.web.app)
 
 
 ### ANGOLA CONECTADA
