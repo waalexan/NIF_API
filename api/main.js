@@ -1,9 +1,14 @@
 const express = require('express');
 const axios = require('axios');
 const cheerio = require('cheerio');
+const cors = require('cors'); // Import the cors middleware
 
 const app = express();
 const port = 3000;
+
+// Use the cors middleware
+app.use(cors());
+
 
 async function api(nif) {
     // URL para fazer scraping
@@ -68,7 +73,7 @@ app.post('/api/consulta', async (req, res) => {
     const { nif } = req.body;
 
     if (!nif) {
-        return res.status(400).json({ "error": "NIF nÃ£o fornecido" });
+        return res.status(400).json({ "error": "NIF não fornecido" });
     }
 
     const resultados = await api(nif);
@@ -76,6 +81,7 @@ app.post('/api/consulta', async (req, res) => {
 
     console.log(resultados)
 });
+
 
 app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`);
