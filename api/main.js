@@ -1,12 +1,11 @@
 const express = require('express');
 const axios = require('axios');
 const cheerio = require('cheerio');
-const cors = require('cors');
 
 const app = express();
 const port = 3000;
 
-app.use(cors());
+app.use(express.json());
 
 async function api(nif) {
     const url = `https://portaldocontribuinte.minfin.gov.ao/consultar-nif-do-contribuinte?nif=${nif}`;
@@ -44,8 +43,6 @@ async function api(nif) {
         return { "error": error.message };
     }
 }
-
-app.use(express.json());
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/templates/try_api.html');
