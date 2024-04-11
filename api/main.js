@@ -1,9 +1,13 @@
 const express = require('express');
 const axios = require('axios');
 const cheerio = require('cheerio');
+const cors = require('cors');
 
 const app = express();
 const port = 3000;
+
+// Configuração do CORS
+app.use(cors());
 
 async function api(nif) {
     // URL para fazer scraping
@@ -45,8 +49,6 @@ async function api(nif) {
                     }
                 }
             });
-
-
 
             return resultados;
         } else {
