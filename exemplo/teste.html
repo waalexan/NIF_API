@@ -19,7 +19,7 @@
             event.preventDefault();
 
             var nif = document.getElementById('nifInput').value;
-            fetch('http://meunif.vercel.app/consulta', {
+            fetch('http://localhost:3000/api/consulta', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
