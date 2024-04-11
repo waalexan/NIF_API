@@ -1,44 +1,48 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consulta de NIF</title>
+    <title>Consulta NIF</title>
 </head>
 <body>
-    <input type="text" id="nifInput" placeholder="Insira o NIF">
-    <button onclick="consultarNIF()">Consultar</button>
+    <h1>Consulta NIF</h1>
+    <form id="nifForm">
+        <label for="nifInput">Digite o NIF:</label>
+        <input type="text" id="nifInput" name="nif">
+        <button type="submit">Consultar</button>
+    </form>
+    <div id="resultado"></div>
 
     <script>
-        async function consultarNIF() {
-            const nif = document.getElementById('nifInput').value;
+        document.getElementById('nifForm').addEventListener('submit', function(event) {
+            event.preventDefault();
 
-            if (!nif) {
-                alert('Por favor, forneça um número de identificação fiscal (NIF).');
-                return;
-            }
+            var nif = document.getElementById('nifInput').value;
+            fetch('http://meunif.vercel.app/consulta', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ nif: nif }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                var resultadoDiv = document.getElementById('resultado');
+                resultadoDiv.innerHTML = '';
 
-            try {
-                const response = await fetch('https://meunif.vercel.app/api/consulta', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ nif })
-                });
-
-                if (!response.ok) {
-                    throw new Error('Erro ao consultar o NIF. Por favor, tente novamente mais tarde.');
+                if (data.error) {
+                    resultadoDiv.textContent = data.error;
+                } else {
+                    for (var key in data) {
+                        resultadoDiv.innerHTML += `<p><strong>${key}</strong> ${data[key]}</p>`;
+                    }
                 }
-
-                const data = await response.json();
-                console.log(data);
-
-                // Aqui você pode manipular os resultados da consulta, como exibi-los em uma página HTML
-            } catch (error) {
-                console.error('Erro:', error.message);
-            }
-        }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+            });
+        });
     </script>
 </body>
 </html>
