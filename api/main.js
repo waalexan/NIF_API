@@ -1,9 +1,18 @@
 const express = require('express');
 const axios = require('axios');
 const cheerio = require('cheerio');
+const cors = require('cors');
 
 const app = express();
 const port = 3000;
+
+app.use((req, res, next) => {
+    //console.log("Acessou o Middleware!");
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", 'GET,PUT,POST,DELETE');
+    app.use(cors());
+    next();
+});
 
 async function api(nif) {
     // URL para fazer scraping
