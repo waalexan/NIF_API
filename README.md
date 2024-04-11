@@ -4,7 +4,7 @@
 
 No mundo digitalizado e interconectado de hoje, a eficiência e a acessibilidade da informação são essenciais. Uma área crucial onde isso se aplica é a validação de números de identificação fiscal (NIF), também conhecidos como CPF (Cadastro de Pessoas Físicas) no Brasil ou NIF em Portugal. Estes números desempenham um papel fundamental em uma variedade de transações financeiras e administrativas, desde a emissão de faturas até a realização de transações bancárias.
 
-Neste contexto, o desenvolvimento de uma API robusta e fácil de usar para a consulta de números de identificação fiscal torna-se uma necessidade crescente. A API que apresentamos neste artigo preenche essa lacuna, oferecendo uma solução eficiente e confiável para a validação de NIF em projetos desenvolvidos em Python.
+Neste contexto, o desenvolvimento de uma API robusta e fácil de usar para a consulta de números de identificação fiscal torna-se uma necessidade crescente. A API que apresentamos neste artigo preenche essa lacuna, oferecendo uma solução eficiente e confiável para a validação de NIF em projetos desenvolvidos em Python e Javascript.
 
 - **Repositório:** [NIF API](https://github.com/syshard/NIF_API)
 - **Autor:** Walter Alexandre Santana (mr-body)
@@ -20,8 +20,8 @@ Instale o repositório do API :
 ```sh
 git clone https://github.com/syshard/NIF_API.git
 cd NIF_API/api
-pip install requetiment.txt
-python app.py
+npm install
+npm start
 
 ```
 ### COMO USAR A NOSSA API
